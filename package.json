@@ -16,7 +16,8 @@
     "express": "^4.14.1",
     "imdb-api": "^3.0.0",
     "mongoose": "^4.8.2",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "react": "^15.5.4"
   },
   "devDependencies": {
     "concurrently": "^3.4.0"
