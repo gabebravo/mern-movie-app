@@ -14,10 +14,12 @@ let styles = {
   textAlign: 'center'
 }
 
+const playerName = sessionStorage.playerName;
+
 class MovieContainer extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       movieStore: [],
       movies: []
@@ -75,6 +77,7 @@ class MovieContainer extends Component {
   render() {
     return (
       <div>
+        <h3>{`Hello ${this.props.match.params.playerName}`}</h3>
         <Row className="show-grid" style={styles}>
           <Col xs={12} md={12}>
             <Link to="/result">

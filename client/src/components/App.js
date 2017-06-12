@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 
 // COMPONENTS
-import Home from './Home'
+import HomePage from '../containers/HomeContainer'
 import MovieGame from '../containers/MovieContainer'
 import Result from './Result'
 
@@ -16,8 +16,8 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/movie-game' component={MovieGame} />
+            <Route exact path='/' component={HomePage} />
+            <Route path='/movie-game/:playerName' component={MovieGame} />
             <Route path='/result' component={Result} />
             <Route render={() => {
               return <h1>Not Found</h1>
