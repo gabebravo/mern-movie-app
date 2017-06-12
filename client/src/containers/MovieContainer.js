@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 import Movie from '../components/Movie';
@@ -10,8 +10,7 @@ const IMDB_API = 'http://www.omdbapi.com/?i=';
 
 let styles = {
   minHeight: 100,
-  marginTop: 20,
-  textAlign: 'center'
+  marginTop: 20
 }
 
 const playerName = sessionStorage.playerName;
@@ -21,8 +20,10 @@ class MovieContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
+      score: 0,
       movieStore: [],
-      movies: []
+      movies: [],
+      winningMovie: 2
     }
   }
 
@@ -38,6 +39,7 @@ class MovieContainer extends Component {
       movieArray.splice(twoMovies[1], 1);
 
     this.setState({ movieStore: movieArray});
+    this.setState({ winningMovie: 2});
 
     let results = [];
 
@@ -63,40 +65,73 @@ class MovieContainer extends Component {
   }
 
   componentDidMount() {
+    this.setState({ winningMovie: 2 })
     axios.get('/movies')
     .then(response => {
       this.setState({
         movieStore: response.data
       });
     })
+    .then( () => {
+      this.getMovieSet();
+    })
     .catch(function (error) {
       console.log(error);
     });
   }
 
+  movieChoice = (guess) => {
+    if( this.state.winningMovie < 2 ) { return }
+    let winningMovie = ( Number(this.state.movies[0].data.imdbRating) > Number(this.state.movies[1].data.imdbRating) ) ?
+      0 : 1;
+    if( guess === winningMovie ) {
+      this.setState({ score: this.state.score + 2, winningMovie: winningMovie })
+    } else {
+      this.setState({ winningMovie: winningMovie })
+    }
+  }
+
+  renderMovies = (movieArr, winner) => {
+    return movieArr.map( (movie, index)  => {
+      return (
+        <Movie
+          key={`movie.data.Title${index}`}
+          movieIndex={index}
+          imgUrl={movie.data.Poster}
+          title={movie.data.Title}
+          actors={movie.data.Actors}
+          plot={movie.data.Plot}
+          onClick={this.movieChoice}
+          movieStatus={ index === winner ? 'movie-winner' : winner === 2 ? '' : 'movie-loser' }
+        />
+      );
+    });
+  }
+
   render() {
+    let nextMovieSet = this.state.movies.length > 0 ? this.renderMovies(this.state.movies, this.state.winningMovie) : <div></div>
     return (
-      <div>
-        <h3>{`Hello ${this.props.match.params.playerName}`}</h3>
-        <Row className="show-grid" style={styles}>
-          <Col xs={12} md={12}>
+      <div style={styles}>
+        <Row>
+          <Col xs={6} md={6}>
+            <div className="score">
+              <h3>{playerName}: <Badge>{this.state.score}</Badge></h3>
+            </div>
+          </Col>
+          <Col xs={6} md={6}>
             <Link to="/result">
-              <Button bsStyle="info" bsSize="large">
-                Result Page
-              </Button>
+              <Button bsStyle="info" bsSize="large" className="quit-button">End Game</Button>
             </Link>
           </Col>
         </Row>
-        {
-          this.state.movies.length > 0 && <Movie imdb={this.state.movies} />
-        }
-        <Row className="show-grid" style={styles}>
-          <Col xs={12} md={12}>
-            <Button bsStyle="info" bsSize="large" onClick={this.getMovieSet}>
-              Next Movie Set
-            </Button>
-          </Col>
-        </Row>
+        <Row style={styles} className="center">{ nextMovieSet }</Row>
+          <Row style={styles}>
+            <Col xs={12} md={12} className="center">
+              <Button bsStyle="info" bsSize="large" onClick={this.getMovieSet}>
+                Next Movie Set
+              </Button>
+            </Col>
+          </Row>
       </div>
     );
   }

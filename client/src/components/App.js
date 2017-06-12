@@ -17,7 +17,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path='/' component={HomePage} />
-            <Route path='/movie-game/:playerName' component={MovieGame} />
+            <Route path='/movie-game' component={MovieGame} />
             <Route path='/result' component={Result} />
             <Route render={() => {
               return <h1>Not Found</h1>

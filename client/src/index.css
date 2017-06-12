@@ -13,24 +13,37 @@ body {
 }
 
 /* -----------------------
-   HOMEPAGE STYLES ----- */
+   MOVIEPAGE STYLES ----- */
 
-.hompage-header {
-  min-height: 7rem;
+.score {
+    margin-left: 3rem;
+    margin-top: -1rem;
 }
 
-.hompage-scores {
-  padding: .5rem;
+.quit-button {
+  float: right;
+  margin-right: 3rem;
+  margin-top: 1rem;
 }
 
-/*.hompage-scores .col-md-2 {
-    width: 15.666667%;
-}*/
-
-li {
-  list-style: none;
+.badge {
+  padding: 0px 10px;
+  font-size: 18px;
+  line-height: 2;
+  background-color: #4059DB;
+  border-radius: 30px;
 }
 
-li {
-  font-size: 2rem;
+.movie-text {
+  text-align: left;
+    max-width: 49rem;
+    margin-left: 8rem;
+}
+
+.movie-winner {
+  border: solid 5px green;
+}
+
+.movie-loser {
+  border: solid 5px red;
 }

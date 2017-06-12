@@ -8,6 +8,7 @@ import {
 // Components
 import Header from '../components/Header'
 import Scoreboard from '../components/Home/Scoreboard'
+import Instructions from '../components/Home/Instructions'
 
 let styles = {
   minHeight: 100,
@@ -26,7 +27,7 @@ class Home extends Component {
   getValidationState = () => {
     const length = this.state.playerName.length;
     if (length > 2 && length < 11) return 'success';
-    else if (length < 3 || length > 3 ) return 'warning';
+    else if (length < 3 || length > 10 ) return 'warning';
     else if (length > 0) return 'error';
   }
 
@@ -34,11 +35,16 @@ class Home extends Component {
     this.setState({ playerName: e.target.value });
   }
 
+  savePlayerName = () => {
+    const playerName = this.state.playerName;
+    sessionStorage.playerName = playerName;
+  }
+
   allowLink = (playername) => {
     return (
       playername.length > 2 && playername.length < 11 ?
-      <Link className='button' to={`/movie-game/${this.state.playerName}`} >
-        <Button bsStyle="info" bsSize="large" >
+      <Link to="/movie-game" >
+        <Button bsStyle="info" bsSize="large" onClick={this.savePlayerName}>
           Play Now
         </Button>
       </Link> :
@@ -54,13 +60,7 @@ class Home extends Component {
       <Header text={`top 10 scores`}/>
       <Scoreboard />
         <Header text={`instructions for playing`}/>
-        <Row className="pad-bottom">
-          <Col xsHidden md={4} />
-          <Col xs={12} md={4} >
-            <p>Welcome to the IMDB Challenge Game. The rules are simple, you will be shown 2 different movies, and you have to pick which one has the higher score. Each correct guess will increase your score by 2 points. After choosing, youll be shown the correct choice and the incoorect choice as well as a button to continue. At any point if you want to quit the game click the button that says "End Game Now". At the end of your game, you will be shown your final score, and if you have a TOP 10 score, you will be added to the leader board along with your awesome score. If you're ready to play, enter your name and hit the "Play Now" button.</p>
-          </Col>
-          <Col xsHidden md={4} />
-        </Row>
+        <Instructions text={`Welcome to the IMDB Challenge Game. You'll be shown two different movies and have to pick the one you think has the higher score. Each correct guess will increase your score by two points. Each round will show the winning and loasing choice. You can quit anytime by clicking the "End Game Now" button. At the end of your game, you'll be shown your final score, and if you have a TOP 10 score, you'll be added to the leader board along with your awesome score. If you're ready to play, enter your name and hit the "Play Now" button.`} />
           <Row>
             <Col xsHidden md={4} />
             <Col xs={12} md={4} className="center pad-bottom">
@@ -73,7 +73,7 @@ class Home extends Component {
                   <FormControl
                     type="text"
                     value={this.state.playerName}
-                    placeholder="At least 2 charecters long, but no more than 10"
+                    placeholder="At least 3 charecters long, but no more than 10"
                     onChange={this.handleChange}
                   />
                   <FormControl.Feedback />
