@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Row, Col, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
-import Movie from '../components/Movie';
+import Movie from '../components/Movie/Movie';
 import axios from 'axios';
 
 const API_KEY = 'a4d1e40e';
@@ -23,7 +23,9 @@ class MovieContainer extends Component {
       score: 0,
       movieStore: [],
       movies: [],
-      winningMovie: 2
+      winningMovie: 2,
+      movie1Score: 0,
+      movie2Score: 0
     }
   }
 
@@ -38,8 +40,12 @@ class MovieContainer extends Component {
     let movie2 = this.state.movieStore[twoMovies[1]];
       movieArray.splice(twoMovies[1], 1);
 
-    this.setState({ movieStore: movieArray});
-    this.setState({ winningMovie: 2});
+    this.setState({
+      movieStore: movieArray,
+      winningMovie: 2,
+      movie1Score: 0,
+      movie2Score: 0
+    });
 
     let results = [];
 
@@ -85,9 +91,18 @@ class MovieContainer extends Component {
     let winningMovie = ( Number(this.state.movies[0].data.imdbRating) > Number(this.state.movies[1].data.imdbRating) ) ?
       0 : 1;
     if( guess === winningMovie ) {
-      this.setState({ score: this.state.score + 2, winningMovie: winningMovie })
+      this.setState({
+        score: this.state.score + 1,
+        winningMovie: winningMovie,
+        movie1Score: this.state.movies[0].data.imdbRating,
+        movie2Score: this.state.movies[1].data.imdbRating
+       })
     } else {
-      this.setState({ winningMovie: winningMovie })
+      this.setState({
+        winningMovie: winningMovie,
+        movie1Score: this.state.movies[0].data.imdbRating,
+        movie2Score: this.state.movies[1].data.imdbRating
+      })
     }
   }
 
@@ -103,9 +118,14 @@ class MovieContainer extends Component {
           plot={movie.data.Plot}
           onClick={this.movieChoice}
           movieStatus={ index === winner ? 'movie-winner' : winner === 2 ? '' : 'movie-loser' }
+          movieScore={ index === 0 ? this.state.movie1Score : this.state.movie2Score }
         />
       );
     });
+  }
+
+  saveScore = () => {
+    sessionStorage.score = this.state.score;
   }
 
   render() {
@@ -119,7 +139,7 @@ class MovieContainer extends Component {
             </div>
           </Col>
           <Col xs={6} md={6}>
-            <Link to="/result">
+            <Link to="/result" onClick={this.saveScore}>
               <Button bsStyle="info" bsSize="large" className="quit-button">End Game</Button>
             </Link>
           </Col>

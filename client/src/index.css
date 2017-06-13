@@ -41,9 +41,9 @@ body {
 }
 
 .movie-winner {
-  border: solid 5px green;
+  color: green;
 }
 
 .movie-loser {
-  border: solid 5px red;
+  color: red;
 }

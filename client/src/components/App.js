@@ -8,7 +8,7 @@ import {
 // COMPONENTS
 import HomePage from '../containers/HomeContainer'
 import MovieGame from '../containers/MovieContainer'
-import Result from './Result'
+import Result from '../containers/ResultContainer'
 
 class App extends Component {
   render() {

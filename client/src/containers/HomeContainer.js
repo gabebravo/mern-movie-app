@@ -9,10 +9,13 @@ import {
 import Header from '../components/Header'
 import Scoreboard from '../components/Home/Scoreboard'
 import Instructions from '../components/Home/Instructions'
+import LargeModal from '../components/Home/LargeModal'
 
 let styles = {
   minHeight: 100,
-  marginTop: 20
+  marginTop: 20,
+  smShow: false,
+  lgShow: false
 }
 
 class Home extends Component {
@@ -48,11 +51,14 @@ class Home extends Component {
           Play Now
         </Button>
       </Link> :
-        <Button bsStyle="info" bsSize="large" >
+        <Button bsStyle="info" bsSize="large" onClick={this.lgOpen}>
           Play Now
         </Button>
     );
   }
+
+  lgOpen = () => this.setState({ lgShow: true });
+  lgClose = () => this.setState({ lgShow: false });
 
   render(){
     return(
@@ -60,7 +66,7 @@ class Home extends Component {
       <Header text={`top 10 scores`}/>
       <Scoreboard />
         <Header text={`instructions for playing`}/>
-        <Instructions text={`Welcome to the IMDB Challenge Game. You'll be shown two different movies and have to pick the one you think has the higher score. Each correct guess will increase your score by two points. Each round will show the winning and loasing choice. You can quit anytime by clicking the "End Game Now" button. At the end of your game, you'll be shown your final score, and if you have a TOP 10 score, you'll be added to the leader board along with your awesome score. If you're ready to play, enter your name and hit the "Play Now" button.`} />
+        <Instructions text={`Welcome to the IMDB Challenge Game. You'll be shown two different movies and have to pick the one you think has the higher score. Each correct guess will increase your score by a point. Each round will show the winning and loasing choice. You can quit anytime by clicking the "End Game Now" button. At the end of your game, you'll be shown your final score, and if you have a TOP 10 score, you'll be added to the leader board along with your awesome score. If you're ready to play, enter your name and hit the "Play Now" button.`} />
           <Row>
             <Col xsHidden md={4} />
             <Col xs={12} md={4} className="center pad-bottom">
@@ -88,6 +94,7 @@ class Home extends Component {
               {this.allowLink(this.state.playerName)}
             </Col>
         </Row>
+        <LargeModal show={this.state.lgShow} onHide={this.lgClose} />
       </div>
     );
   }
