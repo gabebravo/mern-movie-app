@@ -24,11 +24,14 @@ const updateScores = (req, res) => {
   Score.find({}).sort({ score: 'asc' }).limit(1)
     .then( lowestScore => {
       if(req.body.score > lowestScore[0].score) {
-        let newScore = new Score({ player: req.body.player, score: req.body.score });
-        newScore.save()
-          .then( () => {
-            return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
-          })
+        Score.findByIdAndRemove(lowestScore[0]._id)
+        .then( () => {
+          let newScore = new Score({ player: req.body.player, score: req.body.score });
+          newScore.save()
+            .then( () => {
+              return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
+            })
+        })
       } else {
         return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
       }
