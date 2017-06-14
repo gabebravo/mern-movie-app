@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import {
   Button, Row, Col, FormGroup, ControlLabel,
   FormControl, HelpBlock, ListGroup, ListGroupItem
@@ -18,13 +19,26 @@ let styles = {
   lgShow: false
 }
 
-class Home extends Component {
+class HomeContainer extends Component {
 
   constructor() {
     super();
     this.state = {
-      playerName: ''
+      playerName: '',
+      playerScores: []
     }
+  }
+
+  componentDidMount() {
+    axios.get('/scores')
+      .then( response => {
+        this.setState({
+          playerScores: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   getValidationState = () => {
@@ -61,10 +75,11 @@ class Home extends Component {
   lgClose = () => this.setState({ lgShow: false });
 
   render(){
+    const playerScores = this.state.playerScores;
     return(
       <div style={styles}>
       <Header text={`top 10 scores`}/>
-      <Scoreboard />
+      <Scoreboard players={playerScores} />
         <Header text={`instructions for playing`}/>
         <Instructions text={`Welcome to the IMDB Challenge Game. You'll be shown two different movies and have to pick the one you think has the higher score. Each correct guess will increase your score by a point. Each round will show the winning and loasing choice. You can quit anytime by clicking the "End Game Now" button. At the end of your game, you'll be shown your final score, and if you have a TOP 10 score, you'll be added to the leader board along with your awesome score. If you're ready to play, enter your name and hit the "Play Now" button.`} />
           <Row>
@@ -100,4 +115,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default HomeContainer

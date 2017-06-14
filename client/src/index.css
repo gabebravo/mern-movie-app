@@ -47,3 +47,10 @@ body {
 .movie-loser {
   color: red;
 }
+
+/* -----------------------
+   RESULTPAGE STYLES ----- */
+
+.button-spacing {
+  margin-left: 20px;
+}

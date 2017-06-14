@@ -3,27 +3,25 @@ import {
   Row, Col, ListGroup, ListGroupItem
 } from 'react-bootstrap'
 
-const Scoreboard = () => (
+const getScores = (players) => {
+  return players.map( (player, index) => {
+    return <ListGroupItem key={index}>{player.player}: {player.score}</ListGroupItem>
+  })
+}
+
+const Scoreboard = props => (
   <Row>
     <Col xsHidden md={4} />
-    <Col xs={12} md={2}>
-      <ListGroup>
-        <ListGroupItem>Player1: 20</ListGroupItem>
-        <ListGroupItem>Player2: 18</ListGroupItem>
-        <ListGroupItem>Player3: 16</ListGroupItem>
-        <ListGroupItem>Player4: 14</ListGroupItem>
-        <ListGroupItem>Player5: 12</ListGroupItem>
-      </ListGroup>
-    </Col>
-    <Col xs={12} md={2}>
-      <ListGroup>
-        <ListGroupItem>Player6: 10</ListGroupItem>
-        <ListGroupItem>Player7: 08</ListGroupItem>
-        <ListGroupItem>Player8: 06</ListGroupItem>
-        <ListGroupItem>Player9: 04</ListGroupItem>
-        <ListGroupItem>Player10: 02</ListGroupItem>
-      </ListGroup>
-    </Col>
+      <Col xs={12} md={2}>
+        <ListGroup>
+          {getScores(props.players.slice(0, 5))}
+        </ListGroup>
+      </Col>
+      <Col xs={12} md={2}>
+        <ListGroup>
+          {getScores(props.players.slice(5, 10))}
+        </ListGroup>
+      </Col>
     <Col xsHidden md={4} />
   </Row>
 );

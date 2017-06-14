@@ -24,9 +24,13 @@ app.use(bodyParser.json());
 // ROUTES FOR OUR API
 // =============================================================================
 
-// routes specific to User schema
+// routes specific to Movies schema
   const movieRouter = require('./server/routes/movie');
   app.use('/movies', movieRouter);
+
+// routes specific to Scores schema
+  const scoreRouter = require('./server/routes/score');
+  app.use('/scores', scoreRouter);
 
 // START THE SERVER
 // =============================================================================

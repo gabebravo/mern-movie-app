@@ -13,8 +13,6 @@ let styles = {
   marginTop: 20
 }
 
-const playerName = sessionStorage.playerName;
-
 class MovieContainer extends Component {
 
   constructor(props){
@@ -87,6 +85,7 @@ class MovieContainer extends Component {
   }
 
   movieChoice = (guess) => {
+    // winningMovie init val = 2, if less than 2, they already picked and are trying to click again, so skip this
     if( this.state.winningMovie < 2 ) { return }
     let winningMovie = ( Number(this.state.movies[0].data.imdbRating) > Number(this.state.movies[1].data.imdbRating) ) ?
       0 : 1;
@@ -129,7 +128,8 @@ class MovieContainer extends Component {
   }
 
   render() {
-    let nextMovieSet = this.state.movies.length > 0 ? this.renderMovies(this.state.movies, this.state.winningMovie) : <div></div>
+    let nextMovieSet = this.state.movies.length > 0 ? this.renderMovies(this.state.movies, this.state.winningMovie) : <div></div>;
+    const playerName = sessionStorage.playerName;
     return (
       <div style={styles}>
         <Row>
