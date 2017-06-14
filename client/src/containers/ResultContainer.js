@@ -22,19 +22,30 @@ class ResultContainer extends Component {
     }
   }
 
-  componentDidMount() {
-    axios.post('scores/update', {
+  getScores = () => {
+    return axios.get('/scores');
+  }
+
+  updateScores = () => {
+    return axios.post('scores/update', {
       player: sessionStorage.playerName,
       score: sessionStorage.score
     })
-    .then( response => {
-      this.setState({
-        playerScores: response.data
+  }
+
+  componentDidMount() {
+    this.updateScores()
+      .then( () => {
+        this.getScores()
+          .then( scores => {
+            this.setState({
+              playerScores: scores.data
+            });
+          })
+      })
+      .catch(function (scores) {
+        console.log(scores);
       });
-    })
-    .catch(function (response) {
-      console.log(response);
-    });
   }
 
   render(){
@@ -43,7 +54,7 @@ class ResultContainer extends Component {
     return (
       <div style={styles}>
       <Header text={`top 10 scores`}/>
-      <Scoreboard players={playerScores} />
+      { playerScores.length > 0 && <Scoreboard players={playerScores} /> }
         <Header text={`${playerName} your final score was ${sessionStorage.score}`}/>
         <Instructions text={`Thanks for playing the IMDB Challenge Game. If you want to play another game, simply hit the "Play Again" button. To play with a new player, click on "New Player"`} />
         <Row className="show-grid" style={styles}>

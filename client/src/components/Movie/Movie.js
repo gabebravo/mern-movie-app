@@ -1,11 +1,6 @@
 import React from 'react'
 import { Button, Col } from 'react-bootstrap';
 
-let styles = {
-  minHeight: 100,
-  marginTop: 20
-}
-
 const Movie = props => (
   <Col xs={6} md={6} className="center">
     <img src={props.imgUrl} alt="Imdb movie poster" />

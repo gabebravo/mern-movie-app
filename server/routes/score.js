@@ -22,22 +22,19 @@ const getScores = (req, res) => {
 
 const updateScores = (req, res) => {
   Score.find({}).sort({ score: 'asc' }).limit(1)
-    .then( lowestScore => {
+    .then( lowestScore => { // parent promise 1
       if(req.body.score > lowestScore[0].score) {
         Score.findByIdAndRemove(lowestScore[0]._id)
-        .then( () => {
+        .then( () => { // child1 promise 1
           let newScore = new Score({ player: req.body.player, score: req.body.score });
           newScore.save()
-            .then( () => {
-              return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
+            .then( () => { // child1 promise 2
+              res.status(200).json({message: 'player score was saved'});
             })
         })
       } else {
-        return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
+        res.status(200).json({message: 'player score was too low'});
       }
-    })
-    .then(scores => {
-      res.status(200).json(scores);
     })
     .catch(
       err => {
