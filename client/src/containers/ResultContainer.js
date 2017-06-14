@@ -23,27 +23,18 @@ class ResultContainer extends Component {
   }
 
   componentDidMount() {
-
-    axios.get('/scores')
-      .then( response => {
-        this.setState({
-          playerScores: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
+    axios.post('scores/update', {
+      player: sessionStorage.playerName,
+      score: sessionStorage.score
+    })
+    .then( response => {
+      this.setState({
+        playerScores: response.data
       });
-
-    // axios.get('/scores')
-    //   .then( response => {
-    //     this.setState({
-    //       playerScores: response.data
-    //     });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-
+    })
+    .catch(function (response) {
+      console.log(response);
+    });
   }
 
   render(){

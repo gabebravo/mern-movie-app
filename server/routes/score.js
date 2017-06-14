@@ -6,7 +6,7 @@ const scoreSchema = require('../schemas/score');
 const Score = mongoose.model('scores', scoreSchema);
 
 const getScores = (req, res) => {
-  Score.find({}).sort({ score: 'descending' }).select({ _id: 0 })
+  Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
     .then(scores => {
       if (!scores) {
         console.log('no scores');
@@ -21,24 +21,31 @@ const getScores = (req, res) => {
 }
 
 const updateScores = (req, res) => {
-  console.log(req.params.player);
-  // console.log(req.params.score);
-  // Score
-  // .findById(req.params.id)
-  // .exec()
-  // .then(survey => {
-  //   res.status(200).json(survey);
-  // })
-  // .catch(
-  //   err => {
-  //     console.error(err);
-  //     res.status(500).json({message: 'Internal server error'});
-  // });
+  Score.find({}).sort({ score: 'asc' }).limit(1)
+    .then( lowestScore => {
+      if(req.body.score > lowestScore[0].score) {
+        let newScore = new Score({ player: req.body.player, score: req.body.score });
+        newScore.save()
+          .then( () => {
+            return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
+          })
+      } else {
+        return Score.find({}).sort({ score: 'desc' }).select({ _id: 0 })
+      }
+    })
+    .then(scores => {
+      res.status(200).json(scores);
+    })
+    .catch(
+      err => {
+        console.error(err);
+        res.status(500).json({message: 'Internal server error'});
+    });
 }
 
 // controllers
 router.get('/', getScores);
-router.post('/update/:player', getScores);
+router.post('/update', updateScores);
 
 //export Directory
 module.exports = router;
