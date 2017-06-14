@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const Instructions = ({ text }) => (
   <Row className="pad-bottom">
@@ -10,5 +11,9 @@ const Instructions = ({ text }) => (
     <Col xsHidden md={4} />
   </Row>
 );
+
+Instructions.propTypes = {
+  text: PropTypes.string
+}
 
 export default Instructions

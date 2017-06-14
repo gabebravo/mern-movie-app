@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const styles = {
   textAlign: 'center',
@@ -14,5 +15,9 @@ const Header = ({ text }) => (
     </Col>
   </Row>
 );
+
+Header.propTypes = {
+  text: PropTypes.string
+}
 
 export default Header

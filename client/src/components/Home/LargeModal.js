@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const LargeModal = props => (
   <Modal {...props} bsSize="large" aria-labelledby="contained-modal-title-lg">
@@ -15,5 +16,9 @@ const LargeModal = props => (
         </Modal.Footer>
       </Modal>
 );
+
+LargeModal.propTypes = {
+  onHide: PropTypes.function,
+}
 
 export default LargeModal

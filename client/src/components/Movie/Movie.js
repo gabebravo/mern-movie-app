@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Col } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const Movie = props => (
   <Col xs={6} md={6} className="center">
@@ -17,5 +18,15 @@ const Movie = props => (
     </Button>
   </Col>
 );
+
+Movie.propTypes = {
+  imgUrl: PropTypes.string,
+  title: PropTypes.string,
+  movieStatus: PropTypes.string,
+  movieScore: PropTypes.string,
+  actors: PropTypes.string,
+  plot: PropTypes.string,
+  movieIndex: PropTypes.function
+}
 
 export default Movie;

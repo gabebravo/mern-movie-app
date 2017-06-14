@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap'
 
 let styles = {
   minHeight: 100,

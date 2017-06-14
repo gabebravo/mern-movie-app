@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Row, Col, ListGroup, ListGroupItem
 } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const getScores = (players) => {
   return players.map( (player, index) => {
@@ -25,5 +26,9 @@ const Scoreboard = props => (
     <Col xsHidden md={4} />
   </Row>
 );
+
+Scoreboard.PropTypes = {
+  players: PropTypes.array
+}
 
 export default Scoreboard;
