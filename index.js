@@ -1,5 +1,4 @@
-// require('dotenv').config();
 
-const {DATABASE_URL, PORT} = require('./config.js');
+const {PORT} = require('./config.js');
 const server = require('./server.js');
-server.runServer(DATABASE_URL, PORT);
+server.runServer(process.env.DATABASE_URL, PORT);

@@ -1,8 +1,3 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
 
 .center {
   text-align: center;
@@ -10,6 +5,10 @@ body {
 
 .pad-bottom {
   margin-bottom: 3rem;
+}
+
+.pad-btn-bottom {
+  margin: auto;
 }
 
 /* -----------------------
@@ -54,3 +53,31 @@ body {
 .button-spacing {
   margin-left: 20px;
 }
+
+
+/* -----------------------
+   MOBILE ONLY STYLES ----- */
+
+@media only screen and (max-width : 500px) {
+   .movie-text {
+     text-align: left;
+     max-width: 32rem;
+     margin-left: 4rem;
+   }
+   .pad-btn-bottom {
+     margin-bottom: 3rem;
+   }
+ }
+
+/* -----------------------
+   TABLET ONLY STYLES ----- */
+@media only screen and (min-device-width: 501px) and (max-device-width: 805px) {
+   .movie-text {
+     text-align: left;
+     max-width: 30rem;
+     margin-left: 23rem;
+   }
+   .pad-btn-bottom {
+     margin-bottom: 3rem;
+   }
+ }

@@ -17,9 +17,9 @@ app.use(morgan(MORGAN, {}));
 app.use(bodyParser.json());
 
 // tell Node/Express to serve static assets in production
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static('client/build'));
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
 
 // ROUTES FOR OUR API
 // =============================================================================

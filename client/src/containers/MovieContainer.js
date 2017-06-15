@@ -6,7 +6,7 @@ import Movie from '../components/Movie/Movie';
 import axios from 'axios';
 
 const API_KEY = 'a4d1e40e';
-const IMDB_API = 'http://www.omdbapi.com/?i=';
+const IMDB_API = '//www.omdbapi.com/?i=';
 
 let styles = {
   minHeight: 100,
@@ -41,8 +41,8 @@ class MovieContainer extends Component {
     this.setState({
       movieStore: movieArray,
       winningMovie: 2,
-      movie1Score: 0,
-      movie2Score: 0
+      movie1Rating: 0,
+      movie2Rating: 0
     });
 
     let results = [];
@@ -93,14 +93,14 @@ class MovieContainer extends Component {
       this.setState({
         score: this.state.score + 1,
         winningMovie: winningMovie,
-        movie1Score: this.state.movies[0].data.imdbRating,
-        movie2Score: this.state.movies[1].data.imdbRating
+        movie1Rating: this.state.movies[0].data.imdbRating,
+        movie2Rating: this.state.movies[1].data.imdbRating
        })
     } else {
       this.setState({
         winningMovie: winningMovie,
-        movie1Score: this.state.movies[0].data.imdbRating,
-        movie2Score: this.state.movies[1].data.imdbRating
+        movie1Rating: this.state.movies[0].data.imdbRating,
+        movie2Rating: this.state.movies[1].data.imdbRating
       })
     }
   }
@@ -117,7 +117,7 @@ class MovieContainer extends Component {
           plot={movie.data.Plot}
           onClick={this.movieChoice}
           movieStatus={ index === winner ? 'movie-winner' : winner === 2 ? '' : 'movie-loser' }
-          movieScore={ index === 0 ? this.state.movie1Score : this.state.movie2Score }
+          movieScore={ index === 0 ? this.state.movie1Rating : this.state.movie2Rating }
         />
       );
     });

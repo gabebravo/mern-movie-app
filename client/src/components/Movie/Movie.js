@@ -3,7 +3,7 @@ import { Button, Col } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const Movie = props => (
-  <Col xs={6} md={6} className="center">
+  <Col xs={12} md={6} className="center">
     <img src={props.imgUrl} alt="Imdb movie poster" />
     <div className="movie-text">
       <h3>{props.title}</h3>
@@ -13,7 +13,7 @@ const Movie = props => (
       <h5><b>Cast:</b> {` ${props.actors}`}</h5>
       <p>{`${props.plot}`}</p>
     </div>
-    <Button bsStyle="info" bsSize="large" onClick={() => props.onClick(props.movieIndex)}>
+    <Button className="pad-btn-bottom" bsStyle="info" bsSize="large" onClick={() => props.onClick(props.movieIndex)}>
       Select
     </Button>
   </Col>
@@ -23,10 +23,9 @@ Movie.propTypes = {
   imgUrl: PropTypes.string,
   title: PropTypes.string,
   movieStatus: PropTypes.string,
-  movieScore: PropTypes.string,
   actors: PropTypes.string,
   plot: PropTypes.string,
-  movieIndex: PropTypes.function
+  movieIndex: PropTypes.number
 }
 
 export default Movie;

@@ -18,7 +18,7 @@ const LargeModal = props => (
 );
 
 LargeModal.propTypes = {
-  onHide: PropTypes.function,
+  onHide: PropTypes.func,
 }
 
 export default LargeModal

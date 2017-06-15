@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import {
   Button, Row, Col, FormGroup, ControlLabel,
-  FormControl, HelpBlock, ListGroup, ListGroupItem
+  FormControl, HelpBlock
 } from 'react-bootstrap'
 
 // Components
